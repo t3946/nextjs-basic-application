@@ -2,8 +2,8 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import cn from "classnames";
 import axios from "axios";
-import Tiles from "@components/pages/main/Tiles";
-import Select from "@components/common/ui/select/Select";
+import React from "react";
+import SelectCategory from "@components/pages/main/SelectCategory";
 
 export async function getServerSideProps() {
   const catalog = await axios
@@ -21,6 +21,7 @@ export async function getServerSideProps() {
 
 export default function Main(props: any) {
   const { catalog } = props;
+  const [category, setCategory] = React.useState(catalog[0]);
 
   return (
     <div className={styles.container}>
@@ -49,22 +50,11 @@ export default function Main(props: any) {
         </section>
 
         <section className="row mt-4 categories">
-          <div className="col">
-            <Select
-              options={[
-                { label: "one", value: 1 },
-                { label: "two", value: 2 },
-                { label: "three", value: 3 },
-                { label: "four", value: 4 },
-              ]}
-              name={"foo"}
-              value={{ label: "one", value: 1 }}
-            />
-          </div>
-
-          <div className="col-12 pl-0 pr-0 d-none d-sm-block">
-            <Tiles catalog={catalog} />
-          </div>
+          <SelectCategory
+            catalog={catalog}
+            category={category}
+            setCategory={setCategory}
+          />
         </section>
       </div>
 
