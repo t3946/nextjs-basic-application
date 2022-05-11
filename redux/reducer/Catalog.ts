@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 
 const initialState = {};
 
-const catalogReducer = (
+const Catalog = (
   state: Record<any, any> = initialState,
   action: AnyAction
 ): Record<any, any> => {
@@ -12,4 +12,4 @@ const catalogReducer = (
   }
 };
 
-export default catalogReducer;
+export default Catalog;

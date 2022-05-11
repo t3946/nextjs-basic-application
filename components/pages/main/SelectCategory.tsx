@@ -1,15 +1,19 @@
 import * as React from "react";
 import Tiles from "@components/pages/main/Tiles";
 import Select from "@components/common/ui/select/Select";
+import useSelector from "@hooks/useSelector";
+import { setSelected } from "@redux/actions/Categories";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   catalog: Record<any, any>[];
-  category: any;
-  setCategory: any;
 }
 
 export const SelectCategory: React.FC<IProps> = function (props) {
-  const { catalog, category, setCategory } = props;
+  const selectedCategory = useSelector(
+    (state) => state.categories.selectedCategory
+  );
+  const { catalog } = props;
   const selectOptions = catalog.map((category) => {
     return {
       label: category.name,
@@ -17,9 +21,14 @@ export const SelectCategory: React.FC<IProps> = function (props) {
     };
   });
   const selectedOption = {
-    label: category.name,
-    value: category,
+    label: selectedCategory.name,
+    value: selectedCategory,
   };
+  const dispatch = useDispatch();
+
+  function selectCategory(category: Record<any, any>) {
+    dispatch(setSelected(category));
+  }
 
   return (
     <div>
@@ -29,7 +38,7 @@ export const SelectCategory: React.FC<IProps> = function (props) {
           name={"foo"}
           value={selectedOption}
           onChange={(e) => {
-            setCategory(e.target.value.value);
+            selectCategory(e.target.value.value);
           }}
           instanceId={"select-category"}
           classes={{
@@ -39,11 +48,7 @@ export const SelectCategory: React.FC<IProps> = function (props) {
       </div>
 
       <div className="col-12 pl-0 pr-0 d-none d-sm-block">
-        <Tiles
-          catalog={catalog}
-          selectedCategory={category}
-          setCategory={setCategory}
-        />
+        <Tiles catalog={catalog} />
       </div>
     </div>
   );

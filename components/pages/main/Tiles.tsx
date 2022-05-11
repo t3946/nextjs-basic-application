@@ -1,19 +1,28 @@
 import * as React from "react";
 import cn from "classnames";
 import Styles from "@components/pages/main/Tiles.module.scss";
+import { setSelected } from "@redux/actions/Categories";
+import { useDispatch } from "react-redux";
+import useSelector from "@hooks/useSelector";
 
 interface IProps {
   catalog: Record<any, any>[];
-  setCategory: any;
-  selectedCategory: Record<any, any>;
 }
 
 export const Tiles: React.FC<IProps> = function (props) {
-  const { catalog, selectedCategory, setCategory } = props;
+  const { catalog } = props;
   const items = [];
+  const selectedCategory = useSelector(
+    (state) => state.categories.selectedCategory
+  );
+  const dispatch = useDispatch();
+
+  function selectCategory(category: Record<any, any>) {
+    dispatch(setSelected(category));
+  }
 
   for (let i = 0; i < catalog.length; i++) {
-    const item = catalog[i];
+    const category = catalog[i];
 
     items.push(
       <label
@@ -22,7 +31,7 @@ export const Tiles: React.FC<IProps> = function (props) {
           Styles[`categoryTile${i + 1}`],
           {
             [Styles.categoryTile_select]:
-              item.category_id === selectedCategory.category_id,
+              category.category_id === selectedCategory.category_id,
           },
         ])}
         key={`categoryTile${i + 1}`}
@@ -30,11 +39,11 @@ export const Tiles: React.FC<IProps> = function (props) {
         <input
           type="radio"
           name={"select-category"}
-          onChange={() => setCategory(item)}
+          onChange={() => selectCategory(category)}
           className={"d-none"}
         />
 
-        <div key={`category-tile-${i}`}>{item.name}</div>
+        <div key={`category-tile-${i}`}>{category.name}</div>
       </label>
     );
   }

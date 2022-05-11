@@ -17,7 +17,7 @@ interface IProps {
   options: any;
   disabled?: boolean;
   name: string;
-  value: { value: string | number; label: string };
+  value: { value: any; label: string };
   clearable?: boolean;
   isValid?: boolean;
   isInvalid?: boolean;
