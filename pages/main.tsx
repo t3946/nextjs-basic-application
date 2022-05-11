@@ -1,26 +1,12 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import cn from "classnames";
-import axios from "axios";
 import React from "react";
 import SelectCategory from "@components/pages/main/SelectCategory";
+import useSelector from "@hooks/useSelector";
 
-export async function getServerSideProps() {
-  const catalog = await axios
-    .get("http://localhost:3001/api/get-catalog")
-    .then((res) => {
-      return res.data.catalog;
-    });
-
-  return {
-    props: {
-      catalog,
-    },
-  };
-}
-
-export default function Main(props: any) {
-  const { catalog } = props;
+export default function Main() {
+  const catalog = useSelector((state) => state.catalog);
   const [category, setCategory] = React.useState(catalog[0]);
 
   return (

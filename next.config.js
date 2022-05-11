@@ -27,6 +27,7 @@ module.exports = withImages(
             "@redux": path.resolve("redux/"),
             "@styles": path.resolve("styles/"),
             "@components": path.resolve("components/"),
+            "@hooks": path.resolve("hooks/"),
           },
         },
       };

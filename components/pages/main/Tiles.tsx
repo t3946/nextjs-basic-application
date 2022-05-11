@@ -25,6 +25,7 @@ export const Tiles: React.FC<IProps> = function (props) {
               item.category_id === selectedCategory.category_id,
           },
         ])}
+        key={`categoryTile${i + 1}`}
       >
         <input
           type="radio"
